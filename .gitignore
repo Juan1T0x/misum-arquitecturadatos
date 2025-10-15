@@ -1,0 +1,3 @@
+# Ignorar archivos propios de proyectos de JavaScript
+
+**/node_modules
