@@ -1,0 +1,2 @@
+{"nombre": "Laura", "edad": 40, "fecha_nacimiento": {"$date": "1983-05-18T00:00:00.000Z"}, "direccion": {"calle": "Rosalia de Castro", "cp": "30100", "ciudad": "Murcia", "pais": "España"}, "estado": "rechazado"}
+{"nombre": "Pedro", "edad": 38, "fecha_nacimiento": {"$date": "1985-05-03T00:00:00.000Z"}, "direccion": {"calle": "Pintor Pedro Flores", "cp": "13767", "ciudad": "Valencia", "pais": "España"}, "estado": "aprobado"}

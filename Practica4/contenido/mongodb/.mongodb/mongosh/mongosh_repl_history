@@ -1,0 +1,8 @@
+show collections
+use usuariosdb
+show dbs
+exit
+ls
+show collections
+use usuarios_db
+show dbs
