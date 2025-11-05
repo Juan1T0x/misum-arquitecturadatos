@@ -18,26 +18,41 @@ const database = "neo4j";
 
 // Métodos
 
-// Consulta de lectura con transacción
-async function consulta(session, queryText) {
+// Consulta de escritura con transacción
+async function consultaEscritura(session, writeQueryText) {
   try {
-    const result = await session.executeRead((tx) => {
-      return tx.run(queryText);
+    const res = await session.executeWrite((tx) => {
+      return tx.run(writeQueryText);
     });
+    if (!res.records.length) return null;
 
-    const resultsArray = result.records.map((row) => row.get("name"));
-    console.log("Resultados de la consulta:");
-    resultsArray.forEach((name) => console.log(name));
-  } catch (error) {
-    console.error("Error en la consulta:", error.message);
-    if (error.cause) {
-      console.error("Causa:", error.cause);
-    }
-    throw error;
+    const node = res.records[0].get("p");
+    return node.properties;
+  } catch (e) {
+    console.log("Error en la consulta de escritura:", e);
+    throw e;
   }
 }
 
+// Consulta de escritura con promesas
+async function consultaEscrituraPromesas(session, writeQueryText) {
+  return session
+    .executeWrite((tx) => {
+      return tx.run(writeQueryText);
+    })
+    .then((res) => {
+      if (!res.records.length) return null;
+      const node = res.records[0].get("p");
+      return node.properties;
+    })
+    .catch((e) => {
+      console.log("Error en la consulta de escritura:", e);
+      throw e;
+    });
+}
+
 // Main
+
 async function main() {
   // DEBUG: Probar la conexión a la base de datos
   // testConnection(host, user, password, database);
@@ -47,11 +62,12 @@ async function main() {
   const session = openSession(driver, database);
 
   // Definimos la consulta Cypher
-  const myQuery = "MATCH (p:Person) RETURN p.name AS name";
+  const myQuery = "CREATE (p:Person {name: 'Woody Allen'}) RETURN p";
 
   // Ejecutamos la consulta
   try {
-    await consulta(session, myQuery);
+    const result = await consultaEscritura(session, myQuery);
+    console.log("Resultado de la consulta:", result);
   } catch (error) {
     console.error("Error al ejecutar la consulta:", error.message);
     if (error.cause) {

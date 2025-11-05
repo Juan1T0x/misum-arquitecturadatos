@@ -18,25 +18,25 @@ const database = "neo4j";
 
 // Métodos
 
-// Consulta de lectura con transacción
-async function consulta(session, queryText) {
-  try {
-    const result = await session.executeRead((tx) => {
+// Consulta de lectura con Promises
+async function consultaPromises(session, queryText) {
+  return session
+    .executeRead((tx) => {
       return tx.run(queryText);
+    })
+    .then((res) => {
+      const resultados = res.records.map((row) => row.get("name"));
+      return resultados;
+    })
+    .then((names) => {
+      names.forEach((name) => console.log(name));
+      return names;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
     });
-
-    const resultsArray = result.records.map((row) => row.get("name"));
-    console.log("Resultados de la consulta:");
-    resultsArray.forEach((name) => console.log(name));
-  } catch (error) {
-    console.error("Error en la consulta:", error.message);
-    if (error.cause) {
-      console.error("Causa:", error.cause);
-    }
-    throw error;
-  }
 }
-
 // Main
 async function main() {
   // DEBUG: Probar la conexión a la base de datos
@@ -51,7 +51,7 @@ async function main() {
 
   // Ejecutamos la consulta
   try {
-    await consulta(session, myQuery);
+    await consultaPromises(session, myQuery);
   } catch (error) {
     console.error("Error al ejecutar la consulta:", error.message);
     if (error.cause) {

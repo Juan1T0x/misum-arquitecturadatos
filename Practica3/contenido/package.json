@@ -1,9 +1,10 @@
 {
   "dependencies": {
-    "neo4j-driver": "^6.0.0"
+    "neo4j-driver": "^6.0.1"
   },
-  "name": "practica3",
+  "name": "contenido",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
@@ -12,5 +13,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "type": "commonjs"
 }
