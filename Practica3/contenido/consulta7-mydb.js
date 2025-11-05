@@ -27,10 +27,10 @@ function procesaRecord(record) {
   console.log("Actor: " + nombre + ", Año de nacimiento: " + year);
 }
 
-// Consulta de lectura con streams
-async function consultaStream(session, queryText) {
+// Consulta de lectura con streams con parámetros
+async function consultaStream(session, queryText, myParam) {
   return new Promise((resolve, reject) => {
-    session.run(queryText).subscribe({
+    session.run(queryText, { yearParam: myParam }).subscribe({
       onKeys: (keys) => {
         console.log("Claves de las columnas:", keys);
       },
@@ -66,14 +66,15 @@ async function main() {
   const driver = await connectDatabase(host, user, password);
   const session = openSession(driver, database);
 
-  // Definimos la consulta Cypher
-  const myQuery =
-    "MATCH (p:Person) WHERE p.born IS NOT NULL RETURN p.name AS name, p.born as born";
+  // Definimos la consulta Cypher y los parámetros
+  var myQuery =
+    "MATCH (p:Person) WHERE p.born IN $yearParam RETURN p.name AS name, p.born as born";
+  var myparam = [1932, 1953];
 
   // Ejecutamos la consulta
   try {
     console.log("Resultados procesados:");
-    const resultados = await consultaStream(session, myQuery);
+    const resultados = await consultaStream(session, myQuery, myparam);
   } catch (error) {
     console.error("Error al ejecutar la consulta:", error.message);
     if (error.cause) {
