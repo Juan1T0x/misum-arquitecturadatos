@@ -1,8 +1,17 @@
+db.restaurantes.find({ name: "Martin Auer" }, { _id: 1, name: 1 })
+it
+db.restaurantes.find({},{ name: "Martin Auer" })
+db.restaurantes.find({ name: "Martin Auer" })
+db.restaurantes.countDocuments({ name: "Martin Auer" })
+db.restaurantes.find({ name: "Martin Auer" })
+show collections
+use restaurantesdb
+exit
+db.usuarios.find()
 show collections
 use usuariosdb
 show dbs
 exit
-ls
-show collections
-use usuarios_db
+db.usuariosdb.find()
 show dbs
+db.usuarios.find()

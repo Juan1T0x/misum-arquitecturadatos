@@ -1,0 +1,3 @@
+nombre.string(),edad.int32(),fecha_nacimiento.date(2006-01-02), direccion.calle.string(), direccion.cp.string(), direccion.ciudad.string(), direccion.pais.string(), estado.string() 
+Juan,47,1976-01-15,Avda. de la Consitucion,30007,Madrid,España, rechazado
+Maria,69,1954-02-03,Avda. de la Fama,13458,Alicante,España, pendiente
